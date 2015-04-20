@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pixelate</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700|Karma:400,700" rel="stylesheet" type="text/css" />
+</head>
+
+    <body>
+    <h1>Pixelate.js</h1>   
+    <br>
+    <canvas id="canvas" width="600" height="400"></canvas>
+		<br>
+		<input id="blocks" type="range" min="1" max="10" value="5">
+
+    <form id="frm1" onsubmit="submitImageURL()" method="post">
+      Image URL: 
+      <input type="text" id="ImageURL" name="ImageURL" value="https://i.imgur.com/DzxC2P2.jpg" required>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+                    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/pixelate.js"></script>
+
+    </body>
+</html>
