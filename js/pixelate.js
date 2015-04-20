@@ -1,30 +1,32 @@
-//TODO
-//image uploader
-//create grid of instagram images
+//Pixelate.js created by Joe Carlson Copyright 2015 - for non-commercial use only
+// To Use: just plug in a website on the page and hit submit! Easy!
+//Sample Images:
+//
+// https://i.imgur.com/DzxC2P2.jpg
+//
+// https://i.imgur.com/F4dJfmU.jpg
+//
+// https://i.imgur.com/nbM4Qhu.jpg
+// Lil Bub
+// http://i.imgur.com/4RBHmsi.jpg
 
 // Grab the Canvas and Drawing Context
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-//var play = false;
 
 // Create an image element
 var img = new Image();
-var initialImageURL = 'http://i.imgur.com/F4dJfmU.jpg'
 
-// When the window first loads - draw the initial demo image
-// var something = (function() {
-//     var executed = false;
-//     return function () {
-//         if (!executed) {
-//             executed = true;
-//             window.onload = draw(initialImageURL);
-//         }
-//     };
-// }) ();
+//When the page first loads - draw the initial demo image
+window.onload = firstDraw();
 
-window.onload = draw(initialImageURL);
-console.log("inital image drawn");
+function firstDraw() {
+    //preload the demo image
+    var initialImageURL = 'http://i.imgur.com/3vfZPKL.jpg';
+    draw(initialImageURL);
+}
 
+//takes any image URL and creates an un pixelated image /4 the orginal size of the image
 function draw (imgURL) {
     // Specify the src to load the image
     img.crossOrigin="anonymous";
@@ -34,13 +36,16 @@ function draw (imgURL) {
         canvas.height = img.height/4;
         canvas.width = img.width/4;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        console.log("image draw");
         pixelate();
     };
 }
 
+//
 function pixelate() {
-    canvas.height = img.height/4;
-    canvas.width = img.width/4;
+    //dynamically adjust canvas size to the size of the uploaded image
+    canvas.height = img.height;
+    canvas.width = img.width;
 
     /// if in play mode use that value, else use slider value
     var size = (blocks.value) * 0.01,
@@ -65,17 +70,19 @@ blocks.addEventListener('change', pixelate, false);
 function submitImageURL() {
     var imgURL = document.getElementById("ImageURL").value;
 
+    //veriy the form isn't black or null
     if (imgURL == null || imgURL == "") {
         alert("Image URL must be filled out");
         return false;
     }
+    //verify that the address is secure
+    if ( imgURL.search("/https:/") != -1 ) {
+        alert("Image URL from https site (security reasons)");
+        return false;  
+    }
 
-    console.log("submit "  + imgURL);
-
-    var img = new Image();
-    img.onload = draw(imgURL);
-    console.log("drawn" + imgURL);
-
+    //draw the submitted image onto the canvas
+    draw(imgURL);
 }
 
 /// poly-fill for requestAnmationFrame with fallback for older

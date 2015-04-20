@@ -10,15 +10,14 @@
     <body>
     <h1>Pixelate.js</h1>   
     <br>
-    <canvas id="canvas" width="600" height="400"></canvas>
+    <canvas id="canvas" width="200" height="200"></canvas>
 		<br>
-		<input id="blocks" type="range" min="1" max="10" value="5">
+		<input id="blocks" type="range" min="1" max="12" value="6">
 
-    <form id="frm1" onsubmit="submitImageURL()" method="post">
+    <form id="frm1" onsubmit="submitImageURL()">
       Image URL: 
-      <input type="text" id="ImageURL" name="ImageURL" value="https://i.imgur.com/DzxC2P2.jpg" required>
-      <br>
-      <input type="submit" value="Submit">
+      <input type="text" id="ImageURL" name="ImageURL" value="https://i.imgur.com/4RBHmsi.jpg" required>
+      <button type="button" text ="submit" onclick="submitImageURL()"> Submit </button>
     </form>
                     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
