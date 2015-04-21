@@ -26,7 +26,7 @@ section {overflow:hidden;}
 .spot p {font-weight:400;}
 
 canvas {
-    padding: 2.5% 2.5% 2.5% 2.5%;
+    padding: -5% -5% -5% -5%;
     image-rendering: optimizeSpeed;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast;

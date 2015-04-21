@@ -22,7 +22,7 @@ window.onload = firstDraw();
 
 function firstDraw() {
     //preload the demo image
-    var initialImageURL = 'http://i.imgur.com/3vfZPKL.jpg';
+    var initialImageURL = 'https://i.imgur.com/3vfZPKL.jpg';
     draw(initialImageURL);
 }
 
@@ -64,8 +64,6 @@ function pixelate() {
     ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height);
 }
 
-// event listeneners for slider
-blocks.addEventListener('change', pixelate, false);
 
 function submitImageURL() {
     var imgURL = document.getElementById("ImageURL").value;
@@ -84,6 +82,9 @@ function submitImageURL() {
     //draw the submitted image onto the canvas
     draw(imgURL);
 }
+
+// event listeneners for slider
+blocks.addEventListener('change', pixelate, false);
 
 /// poly-fill for requestAnmationFrame with fallback for older
 /// browsers which do not support rAF.
