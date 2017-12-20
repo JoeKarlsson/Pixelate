@@ -1,5 +1,7 @@
 # HTML5 Image Pixelate Project
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JoeKarlsson/Pixelate.svg)](https://greenkeeper.io/)
+
 ## about 
 
 This project takes and image, and pixelates it!
