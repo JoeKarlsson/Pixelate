@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" data-page="home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://plausible.joekarlsson.io; connect-src 'self' https://plausible.joekarlsson.io; img-src 'self' blob: data:; style-src 'self'; font-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Pixelate: turn a photo into big square pixels</title>
+  <meta name="description" content="Pick a photo, drag the slider, and save a pixelated copy. Runs in your browser; your picture never leaves your device.">
+  <link rel="canonical" href="https://pixelate.joekarlsson.com/">
+  <meta name="author" content="Joe Karlsson">
+  <meta name="color-scheme" content="only dark">
+  <meta name="darkreader-lock">
+  <meta name="theme-color" content="#0b0b0b">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pixelate">
+  <meta property="og:url" content="https://pixelate.joekarlsson.com/">
+  <meta property="og:title" content="Pixelate: turn a photo into big square pixels">
+  <meta property="og:description" content="Pick a photo, drag the slider, and save a pixelated copy. Your picture never leaves your device.">
+  <meta property="og:image" content="https://pixelate.joekarlsson.com/img/share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Lil Bub the cat, pixelated into big blocks, under the word Pixelate">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pixelate: turn a photo into big square pixels">
+  <meta name="twitter:description" content="Pick a photo, drag the slider, and save a pixelated copy. Your picture never leaves your device.">
+  <meta name="twitter:image" content="https://pixelate.joekarlsson.com/img/share.png">
+  <meta name="twitter:image:alt" content="Lil Bub the cat, pixelated into big blocks, under the word Pixelate">
+  <meta name="twitter:site" content="@joekarlsson1">
+  <meta name="twitter:creator" content="@joekarlsson1">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="preload" as="image" href="img/lil-bub.jpg" fetchpriority="high">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pixelate",
+    "url": "https://pixelate.joekarlsson.com/",
+    "description": "Turn a photo into big square pixels in your browser and save a copy.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires a modern browser",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Joe Karlsson", "url": "https://www.joekarlsson.com/" }
+  }
+  </script>
+  <script src="js/analytics.js?v=2" defer></script>
+  <script src="js/pixelate.js?v=2" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the tool</a>
+  <header class="page-header">
+    <h1>Pixelate</h1>
+    <p class="lede">Turn any photo into big square pixels, then save it. Your picture stays on your device; nothing is uploaded.</p>
+  </header>
+
+  <main id="main">
+    <div class="controls">
+      <div class="control">
+        <label for="file">Photo</label>
+        <input id="file" type="file" accept="image/*">
+      </div>
+      <div class="control">
+        <label for="block-size">Block size <output id="block-size-value" for="block-size">24px</output></label>
+        <input id="block-size" type="range" min="1" max="120" value="24">
+      </div>
+      <div class="control">
+        <button id="download" type="button" class="plausible-event-name=Download">Save PNG</button>
+      </div>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <canvas id="canvas" width="1280" height="853" role="img" aria-label="Lil Bub the cat, pixelated"></canvas>
+  </main>
+
+  <footer class="page-footer">
+    <p>Made by <a href="https://www.joekarlsson.com/">Joe Karlsson</a>. Read <a href="https://www.joekarlsson.com/blog/how-to-pixelate-images-with-html5-and-javascript/">how the pixelating works</a>, or see the <a href="https://github.com/JoeKarlsson/Pixelate">source on GitHub</a>.</p>
+    <p>Privacy: your photo is read and drawn by your own browser and never sent anywhere. The site counts visits with <a href="https://plausible.io/privacy-focused-web-analytics">Plausible</a>, which sets no cookies. Example photo: Lil Bub.</p>
+  </footer>
+</body>
+</html>
