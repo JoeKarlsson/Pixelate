@@ -37,7 +37,8 @@ test('choosing a photo pixelates it and saving downloads a PNG', async ({ page }
   await page.locator('#file').setInputFiles({ name: 'my cat.jpg', mimeType: 'image/jpeg', buffer: await readFile(fixture) });
   await expect(page.locator('#status')).toHaveText('Pixelating my cat.jpg');
   const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#download').click()]);
-  expect(download.suggestedFilename()).toBe('my cat-pixelated.png');
+  // Linux WebKit swaps the space for an underscore in download names.
+  expect(download.suggestedFilename()).toMatch(/^my[ _]cat-pixelated\.png$/);
   const bytes = await readFile(await download.path());
   expect(bytes.subarray(1, 4).toString()).toBe('PNG');
 });
