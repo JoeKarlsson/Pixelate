@@ -35,7 +35,7 @@
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
   <link rel="preload" as="image" href="img/lil-bub.jpg" fetchpriority="high">
   <script type="application/ld+json">
   {
@@ -52,7 +52,7 @@
   }
   </script>
   <script src="js/analytics.js?v=2" defer></script>
-  <script src="js/pixelate.js?v=2" type="module"></script>
+  <script src="js/pixelate.js?v=3" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the tool</a>
@@ -72,7 +72,7 @@
         <input id="block-size" type="range" min="1" max="120" value="24">
       </div>
       <div class="control">
-        <button id="download" type="button" class="plausible-event-name=Download">Save PNG</button>
+        <button id="download" type="button" disabled class="plausible-event-name=Download">Save PNG</button>
       </div>
     </div>
     <p id="status" class="status" role="status" aria-live="polite"></p>
@@ -81,6 +81,19 @@
   </main>
 
   <footer class="page-footer">
+    <nav class="share" aria-labelledby="share-heading">
+      <h2 id="share-heading">Share Pixelate</h2>
+      <ul>
+        <li><a href="https://bsky.app/intent/compose?text=Pixelate%3A%20turn%20a%20photo%20into%20big%20square%20pixels%20https%3A%2F%2Fpixelate.joekarlsson.com%2F" target="_blank" rel="noopener noreferrer">Bluesky</a></li>
+        <li><a href="https://www.threads.net/intent/post?text=Pixelate%3A%20turn%20a%20photo%20into%20big%20square%20pixels%20https%3A%2F%2Fpixelate.joekarlsson.com%2F" target="_blank" rel="noopener noreferrer">Threads</a></li>
+        <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fpixelate.joekarlsson.com%2F" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://www.reddit.com/submit?url=https%3A%2F%2Fpixelate.joekarlsson.com%2F&amp;title=Pixelate%3A%20turn%20a%20photo%20into%20big%20square%20pixels" target="_blank" rel="noopener noreferrer">Reddit</a></li>
+        <li><a href="https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fpixelate.joekarlsson.com%2F&amp;t=Pixelate%3A%20turn%20a%20photo%20into%20big%20square%20pixels" target="_blank" rel="noopener noreferrer">Hacker News</a></li>
+        <li><a href="https://x.com/intent/post?text=Pixelate%3A%20turn%20a%20photo%20into%20big%20square%20pixels&amp;url=https%3A%2F%2Fpixelate.joekarlsson.com%2F" target="_blank" rel="noopener noreferrer">X</a></li>
+        <li><button id="copy-link" type="button">Copy link</button></li>
+      </ul>
+      <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
+    </nav>
     <p>Made by <a href="https://www.joekarlsson.com/">Joe Karlsson</a>. Read <a href="https://www.joekarlsson.com/blog/how-to-pixelate-images-with-html5-and-javascript/">how the pixelating works</a>, or see the <a href="https://github.com/JoeKarlsson/Pixelate">source on GitHub</a>.</p>
     <p>Privacy: your photo is read and drawn by your own browser and never sent anywhere. The site counts visits with <a href="https://plausible.io/privacy-focused-web-analytics">Plausible</a>, which sets no cookies. Example photo: Lil Bub.</p>
   </footer>

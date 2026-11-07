@@ -1,4 +1,4 @@
-import { averageBlocks, blockGrid, fitWithin, pixelatedFileName } from './pixelate-math.js';
+import { averageBlocks, blockGrid, fitWithin, pixelatedFileName, saveSize } from './pixelate-math.js?v=3';
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -17,8 +17,12 @@ const grid = document.createElement('canvas');
 const gridContext = grid.getContext('2d');
 
 let fileName = 'lil-bub.jpg';
+// The original picture's size, so Save PNG can write it at full resolution.
+let originalWidth = 0;
+let originalHeight = 0;
 
 function render() {
+  if (!sourcePixels) return;
   const blockSize = Number(blockSizeInput.value);
   blockSizeOutput.value = `${blockSize}px`;
   const { columns, rows } = blockGrid(source.width, source.height, blockSize);
@@ -38,14 +42,26 @@ function useImage(image, name) {
   source.height = height;
   sourceContext.drawImage(image, 0, 0, width, height);
   sourcePixels = sourceContext.getImageData(0, 0, width, height).data;
+  originalWidth = image.width;
+  originalHeight = image.height;
   fileName = name;
   canvas.setAttribute('aria-label', `${name}, pixelated`);
+  downloadButton.disabled = false;
   render();
+}
+
+// After a file that can't be used: drop the old picture so Save can't write it by mistake.
+function clearImage(message) {
+  sourcePixels = null;
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.setAttribute('aria-label', 'No picture loaded');
+  downloadButton.disabled = true;
+  status.textContent = message;
 }
 
 async function loadFile(file) {
   if (!file.type.startsWith('image/')) {
-    status.textContent = `${file.name} isn't an image. Pick a JPEG, PNG, WebP or GIF.`;
+    clearImage(`${file.name} isn't an image. Pick a JPEG, PNG, WebP or GIF.`);
     return;
   }
   try {
@@ -55,7 +71,7 @@ async function loadFile(file) {
     image.close();
     status.textContent = `Pixelating ${file.name}`;
   } catch (error) {
-    status.textContent = `Couldn't open ${file.name} as an image (${error.message}).`;
+    clearImage(`Couldn't open ${file.name} as an image (${error.message}).`);
   }
 }
 
@@ -66,8 +82,18 @@ fileInput.addEventListener('change', () => {
 
 blockSizeInput.addEventListener('input', render);
 
+// Saves at the original photo's size: the block grid is stretched up without smoothing,
+// so the blocks look the same as on screen, just with more pixels each.
 downloadButton.addEventListener('click', () => {
-  canvas.toBlob((blob) => {
+  if (!sourcePixels) return;
+  const { width, height, capped } = saveSize(originalWidth, originalHeight);
+  const output = document.createElement('canvas');
+  output.width = width;
+  output.height = height;
+  const outputContext = output.getContext('2d');
+  outputContext.imageSmoothingEnabled = false;
+  outputContext.drawImage(grid, 0, 0, grid.width, grid.height, 0, 0, width, height);
+  output.toBlob((blob) => {
     if (!blob) {
       status.textContent = 'Saving failed: the browser could not encode the image.';
       return;
@@ -77,6 +103,9 @@ downloadButton.addEventListener('click', () => {
     link.download = pixelatedFileName(fileName);
     link.click();
     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    status.textContent = capped
+      ? `Saved at ${width}×${height}, the largest size this page saves (your photo is ${originalWidth}×${originalHeight}).`
+      : `Saved ${link.download} at ${width}×${height}.`;
     window.plausible?.('Download');
   }, 'image/png');
 });
@@ -87,3 +116,16 @@ demo.addEventListener('error', () => {
   status.textContent = 'The example picture failed to load. Choose your own photo above.';
 });
 demo.src = 'img/lil-bub.jpg';
+
+// Copy link, for the share row in the footer.
+const copyLinkButton = document.getElementById('copy-link');
+const shareStatus = document.getElementById('share-status');
+copyLinkButton.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText('https://pixelate.joekarlsson.com/');
+    shareStatus.textContent = 'Link copied.';
+    window.plausible?.('Share', { props: { network: 'copy' } });
+  } catch (error) {
+    shareStatus.textContent = `Couldn't copy the link (${error.message}). It's https://pixelate.joekarlsson.com/`;
+  }
+});

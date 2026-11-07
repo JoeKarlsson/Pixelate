@@ -18,6 +18,22 @@ export function fitWithin(width, height, maxSide = MAX_WORKING_SIDE) {
   };
 }
 
+// Largest picture Save PNG writes. iOS Safari refuses canvases over about 16.7 million
+// pixels, and 8000px on a side is past what any phone camera takes.
+export const MAX_SAVE_SIDE = 8000;
+export const MAX_SAVE_AREA = 16_777_216;
+
+// Size to save a width x height original at: full size, unless that's over the side or
+// area limit, in which case scaled down to fit both. `capped` says whether it shrank.
+export function saveSize(width, height, maxSide = MAX_SAVE_SIDE, maxArea = MAX_SAVE_AREA) {
+  let size = fitWithin(width, height, maxSide);
+  if (size.width * size.height > maxArea) {
+    const scale = Math.sqrt(maxArea / (size.width * size.height));
+    size = { width: Math.max(1, Math.floor(size.width * scale)), height: Math.max(1, Math.floor(size.height * scale)) };
+  }
+  return { ...size, capped: size.width !== width || size.height !== height };
+}
+
 // How many blocks across and down a width x height image becomes when each block is
 // blockSize pixels square. At least one block each way, so huge blocks give one flat color.
 export function blockGrid(width, height, blockSize) {
