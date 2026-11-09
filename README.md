@@ -1,19 +1,14 @@
 # Pixelate
 
-Pixelate turns a photo into big square pixels and saves it as a PNG, all in
-the browser. This repo is the whole site: plain HTML, CSS and JavaScript with
-no build step. It's live at
-[pixelate.joekarlsson.com](https://pixelate.joekarlsson.com).
-
 ![Pixelate: picking a selfie of me in sunglasses holding a pink soft-serve cone at a fair, then dragging the block size slider from 2px up to 90px and back down to 30px as the photo goes from sharp to big blocks of color](.github/readme/2026-11-recording.gif)
 
-## Artist statement
+Pixelate turns any photo into big square blocks, and the photo never leaves your
+phone or computer. Drag the slider and the picture gives up its detail a little
+at a time, until it's a grid of colors. It's the oldest of my pixel projects,
+from 2015.
 
-Pixelate turns any photo into big square blocks, and the photo never leaves
-your phone or computer. Drag the slider and the picture gives up its detail a
-little at a time, until it's a grid of colors.
-
-[Read the full statement](https://www.joekarlsson.com/work/pixelate/).
+[Try it at pixelate.joekarlsson.com](https://pixelate.joekarlsson.com) ·
+[Read the full statement](https://www.joekarlsson.com/work/pixelate/)
 
 ## Quick start
 
