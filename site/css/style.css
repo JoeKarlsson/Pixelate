@@ -169,3 +169,6 @@ a:hover { color: var(--ink); }
 }
 .share button { font-size: var(--size-small); min-height: 44px; padding: var(--space-2) var(--space-3); }
 .share-status { min-height: 1.5em; margin: var(--space-2) 0 0; }
+
+.prose h2 { font-size: var(--size-body); margin: 0 0 var(--space-3); }
+.prose p { max-width: var(--measure); margin: 0 0 var(--space-3); }

@@ -55,13 +55,22 @@ test('a broken image file reports an error', async ({ page }) => {
   await expect(page.locator('#status')).toContainText("Couldn't open broken.png");
 });
 
-for (const path of ['/', '/no-such-page']) {
+for (const path of ['/', '/about.html', '/no-such-page']) {
   test(`no accessibility violations on ${path}`, async ({ page }) => {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
     expect(results.violations).toEqual([]);
   });
 }
+
+test('the about page carries the artist statement and is linked from the home page', async ({ page }) => {
+  const errors = watchForErrors(page);
+  await page.goto('/');
+  await page.getByRole('link', { name: 'about Pixelate' }).click();
+  await expect(page.getByRole('heading', { name: 'Artist statement' })).toBeVisible();
+  await expect(page.locator('main')).toContainText('the photo never leaves your phone or computer');
+  expect(errors).toEqual([]);
+});
 
 test('missing pages get the 404 page, marked noindex', async ({ page }) => {
   await page.goto('/no-such-page');
