@@ -4,8 +4,7 @@
 
 Pixelate turns any photo into big square blocks, and the photo never leaves your
 phone or computer. Drag the slider and the picture gives up its detail a little
-at a time, until it's a grid of colors. It's the oldest of my pixel projects,
-from 2015.
+at a time, until it's a grid of colors.
 
 [Try it at pixelate.joekarlsson.com](https://pixelate.joekarlsson.com) ·
 [Read the full statement](https://www.joekarlsson.com/work/pixelate/)
