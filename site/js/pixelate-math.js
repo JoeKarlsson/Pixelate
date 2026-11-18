@@ -80,3 +80,11 @@ export function averageBlocks(pixels, width, height, columns, rows) {
   }
   return out;
 }
+
+// The block size as a coarse range for analytics, so the dashboard groups like sizes together.
+export function blockSizeBucket(blockSize) {
+  if (blockSize < 10) return '1-9';
+  if (blockSize < 25) return '10-24';
+  if (blockSize < 50) return '25-49';
+  return '50+';
+}

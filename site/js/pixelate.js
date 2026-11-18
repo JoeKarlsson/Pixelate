@@ -1,4 +1,4 @@
-import { averageBlocks, blockGrid, fitWithin, pixelatedFileName, saveSize } from './pixelate-math.js?v=3';
+import { averageBlocks, blockGrid, blockSizeBucket, fitWithin, pixelatedFileName, saveSize } from './pixelate-math.js?v=4';
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -70,6 +70,7 @@ async function loadFile(file) {
     useImage(image, file.name);
     image.close();
     status.textContent = `Pixelating ${file.name}`;
+    window.plausible('Photo Loaded');
   } catch (error) {
     clearImage(`Couldn't open ${file.name} as an image (${error.message}).`);
   }
@@ -106,7 +107,7 @@ downloadButton.addEventListener('click', () => {
     status.textContent = capped
       ? `Saved at ${width}×${height}, the largest size this page saves (your photo is ${originalWidth}×${originalHeight}).`
       : `Saved ${link.download} at ${width}×${height}.`;
-    window.plausible?.('Download');
+    window.plausible('Download', { props: { block_size: blockSizeBucket(Number(blockSizeInput.value)) } });
   }, 'image/png');
 });
 
@@ -124,7 +125,7 @@ copyLinkButton.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText('https://pixelate.joekarlsson.com/');
     shareStatus.textContent = 'Link copied.';
-    window.plausible?.('Share', { props: { network: 'copy' } });
+    window.plausible('Share', { props: { method: 'copy' } });
   } catch (error) {
     shareStatus.textContent = `Couldn't copy the link (${error.message}). It's https://pixelate.joekarlsson.com/`;
   }

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { averageBlocks, blockGrid, fitWithin, pixelatedFileName, saveSize } from '../../site/js/pixelate-math.js';
+import { averageBlocks, blockGrid, blockSizeBucket, fitWithin, pixelatedFileName, saveSize } from '../../site/js/pixelate-math.js';
 
 test('fitWithin leaves small images alone', () => {
   assert.deepEqual(fitWithin(1280, 853, 2000), { width: 1280, height: 853 });
@@ -72,4 +72,8 @@ test('saveSize caps the area for iOS canvases', () => {
   assert.ok(capped);
   assert.ok(width * height <= 16_777_216, `${width}x${height}`);
   assert.ok(Math.abs(width / height - 8000 / 6000) < 0.01);
+});
+
+test('blockSizeBucket groups block sizes at their edges', () => {
+  assert.deepEqual([1, 9, 10, 24, 25, 49, 50, 120].map(blockSizeBucket), ['1-9', '1-9', '10-24', '10-24', '25-49', '25-49', '50+', '50+']);
 });
